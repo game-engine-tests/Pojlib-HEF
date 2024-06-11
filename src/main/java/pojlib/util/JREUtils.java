@@ -17,17 +17,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import pojlib.API;
-import pojlib.util.json.MinecraftInstances;
 
 public class JREUtils {
     private JREUtils() {}
 
     public static String LD_LIBRARY_PATH;
-    public static Map<String, String> jreReleaseList;
-    public static String instanceHome;
     public static String jvmLibraryPath;
     private static String sNativeLibDir;
     private static String runtimeDir;
@@ -130,7 +126,7 @@ public class JREUtils {
         Log.i("jrelog-logcat","Logcat thread started");
     }
 
-    public static void relocateLibPath(final Context ctx) {
+    public static void relocateLibPath(Context ctx) {
         sNativeLibDir = ctx.getApplicationInfo().nativeLibraryDir;
 
         LD_LIBRARY_PATH = ctx.getFilesDir() + "/runtimes/JRE-22/bin:" + ctx.getFilesDir() + "/runtimes/JRE-22/lib:" +
@@ -138,13 +134,13 @@ public class JREUtils {
                 sNativeLibDir;
     }
 
-    public static void setJavaEnvironment(Activity activity, MinecraftInstances.Instance instance) throws Throwable {
+    public static void setJavaEnvironment(Activity activity, String gameDir, String questModel) throws Throwable {
         Map<String, String> envMap = new ArrayMap<>();
         envMap.put("POJLIB_NATIVEDIR", activity.getApplicationInfo().nativeLibraryDir);
         envMap.put("JAVA_HOME", activity.getFilesDir() + "/runtimes/JRE-22");
-        envMap.put("HOME", instance.gameDir);
+        envMap.put("HOME", gameDir);
         envMap.put("TMPDIR", activity.getCacheDir().getAbsolutePath());
-        envMap.put("VR_MODEL", API.model);
+        envMap.put("VR_MODEL", questModel);
         envMap.put("POJLIB_RENDERER", "regal");
 
         envMap.put("LD_LIBRARY_PATH", LD_LIBRARY_PATH);
@@ -174,27 +170,17 @@ public class JREUtils {
         setLdLibraryPath(jvmLibraryPath+":"+LD_LIBRARY_PATH);
     }
 
-    public static int launchJavaVM(final Activity activity, final List<String> JVMArgs, MinecraftInstances.Instance instance) throws Throwable {
-        JREUtils.relocateLibPath(activity);
-        setJavaEnvironment(activity, instance);
+    public static int launchJavaVM(Activity activity, List<String> JVMArgs, String gameDir, String memoryValue, String questModel) throws Throwable {
+        relocateLibPath(activity);
+        setJavaEnvironment(activity, gameDir, questModel);
 
-        final String graphicsLib = loadGraphicsLibrary();
-        List<String> userArgs = getJavaArgs(activity, instance);
+        String graphicsLib = loadGraphicsLibrary();
+        List<String> userArgs = getJavaArgs(activity, gameDir);
 
         //Add automatically generated args
 
-        if (API.customRAMValue) {
-            userArgs.add("-Xms" + API.memoryValue + "M");
-            userArgs.add("-Xmx" + API.memoryValue + "M");
-        } else {
-            if (API.model.equals("Meta Quest Pro") || API.model.equals("Oculus Headset1")) {
-                userArgs.add("-Xms" + 2048 + "M");
-                userArgs.add("-Xmx" + 3072 + "M");
-            } else {
-                userArgs.add("-Xms" + 2048 + "M");
-                userArgs.add("-Xmx" + 2048 + "M");
-            }
-        }
+        userArgs.add("-Xms" + memoryValue + "M");
+        userArgs.add("-Xmx" + memoryValue + "M");
 
         userArgs.add("-XX:+UseZGC");
         userArgs.add("-XX:+ZGenerational");
@@ -213,7 +199,7 @@ public class JREUtils {
         runtimeDir = activity.getFilesDir() + "/runtimes/JRE-22";
 
         initJavaRuntime();
-        chdir(instance.gameDir);
+        chdir(gameDir);
         userArgs.add(0,"java"); //argv[0] is the program name according to C standard.
 
         int exitCode = VMLauncher.launchJVM(userArgs.toArray(new String[0]));
@@ -227,11 +213,11 @@ public class JREUtils {
      * @param ctx The application context
      * @return A list filled with args.
      */
-    public static List<String> getJavaArgs(Context ctx, MinecraftInstances.Instance instance) {
+    public static List<String> getJavaArgs(Context ctx, String gameDir) {
         return new ArrayList<>(Arrays.asList(
                 "-Djava.home=" + new File(ctx.getFilesDir(), "runtimes/JRE-22"),
                 "-Djava.io.tmpdir=" + ctx.getCacheDir().getAbsolutePath(),
-                "-Duser.home=" + instance.gameDir,
+                "-Duser.home=" + gameDir,
                 "-Duser.language=" + System.getProperty("user.language"),
                 "-Dos.name=Linux",
                 "-Dos.version=Android-" + Build.VERSION.RELEASE,
@@ -249,50 +235,6 @@ public class JREUtils {
     }
 
     /**
-     * Parse and separate java arguments in a user friendly fashion
-     * It supports multi line and absence of spaces between arguments
-     * The function also supports auto-removal of improper arguments, although it may miss some.
-     *
-     * @param args The un-parsed argument list.
-     * @return Parsed args as an ArrayList
-     */
-    public static ArrayList<String> parseJavaArguments(String args){
-        ArrayList<String> parsedArguments = new ArrayList<>(0);
-        args = args.trim().replace(" ", "");
-        //For each prefixes, we separate args.
-        for(String prefix : new String[]{"-XX:-","-XX:+", "-XX:","--","-"}){
-            while (true){
-                int start = args.indexOf(prefix);
-                if(start == -1) break;
-                //Get the end of the current argument
-                int end = args.indexOf("-", start + prefix.length());
-                if(end == -1) end = args.length();
-
-                //Extract it
-                String parsedSubString = args.substring(start, end);
-                args = args.replace(parsedSubString, "");
-
-                //Check if two args aren't bundled together by mistake
-                if(parsedSubString.indexOf('=') == parsedSubString.lastIndexOf('=')) {
-                    int arraySize = parsedArguments.size();
-                    if(arraySize > 0){
-                        String lastString = parsedArguments.get(arraySize - 1);
-                        // Looking for list elements
-                        if(lastString.charAt(lastString.length() - 1) == ',' ||
-                                parsedSubString.contains(",")){
-                            parsedArguments.set(arraySize - 1, lastString + parsedSubString);
-                            continue;
-                        }
-                    }
-                    parsedArguments.add(parsedSubString);
-                }
-                else Log.w("JAVA ARGS PARSER", "Removed improper arguments: " + parsedSubString);
-            }
-        }
-        return parsedArguments;
-    }
-
-    /**
      * Open the render library in accordance to the settings.
      * It will fallback if it fails to load the library.
      * @return The name of the loaded library
@@ -301,11 +243,8 @@ public class JREUtils {
         return "libtinywrapper.so";
     }
 
-    public static native long getEGLContextPtr();
-    public static native long getEGLDisplayPtr();
-    public static native long getEGLConfigPtr();
     public static native int chdir(String path);
-    public static native void logToLogger(final Logger logger);
+    public static native void logToLogger(Logger logger);
     public static native boolean dlopen(String libPath);
     public static native void setLdLibraryPath(String ldLibraryPath);
 
