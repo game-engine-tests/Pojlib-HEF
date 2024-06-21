@@ -16,10 +16,6 @@ import java.util.zip.ZipInputStream;
 
 public class FileUtil {
 
-    public static String DIR_GAME_NEW;
-    public static String DIR_HOME_VERSION;
-
-
     public static byte[] loadFromAssetToByte(Context ctx, String inFile) {
         byte[] buffer = null;
 
@@ -37,63 +33,10 @@ public class FileUtil {
         return buffer;
     }
 
-    public static String read(String path) throws IOException {
-        return read(Files.newInputStream(Paths.get(path)));
-    }
-
-    public static String read(InputStream is) throws IOException {
-        StringBuilder out = new StringBuilder();
-        int len;
-        byte[] buf = new byte[512];
-        while((len = is.read(buf))!=-1) {
-            out.append(new String(buf, 0, len));
-        }
-        return out.toString();
-    }
-
-    public static void write(String path, byte[] content) throws IOException
-    {
-        File outPath = new File(path);
-        Objects.requireNonNull(outPath.getParentFile()).mkdirs();
-
-        BufferedOutputStream fos = new BufferedOutputStream(Files.newOutputStream(outPath.toPath()));
-        fos.write(content, 0, content.length);
-        fos.close();
-    }
-
-    public static void unzipArchive(String archivePath, String extractPath) {
-        try {
-            try(ZipFile zipFile = new ZipFile(archivePath)) {
-                byte[] buf = new byte[1024];
-                Enumeration<? extends ZipEntry> entries = zipFile.entries();
-                while(entries.hasMoreElements()) {
-                    ZipEntry entry = entries.nextElement();
-                    if(entry.isDirectory()) {
-                        continue;
-                    }
-
-                    File newFile = newFile(new File(extractPath), entry);
-                    newFile.getParentFile().mkdirs();
-
-                    FileOutputStream fos = new FileOutputStream(newFile);
-                    InputStream input = zipFile.getInputStream(entry);
-                    int len;
-                    while ((len = input.read(buf)) > 0) {
-                        fos.write(buf, 0, len);
-                        fos.flush();
-                    }
-                    fos.close();
-                }
-            }
-        } catch (IOException e) {
-            Logger.getInstance().appendToLog(e.getMessage());
-        }
-    }
-
     public static void unzipArchiveFromAsset(Activity activity, String archiveName, String extractPath) {
         try {
             File zip = new File(extractPath, archiveName);
-            FileUtils.writeByteArrayToFile(zip, FileUtil.loadFromAssetToByte(activity, archiveName));
+            FileUtils.writeByteArrayToFile(zip, loadFromAssetToByte(activity, archiveName));
             try(ZipFile zipFile = new ZipFile(zip)) {
                 byte[] buf = new byte[1024];
                 Enumeration<? extends ZipEntry> entries = zipFile.entries();

@@ -31,6 +31,7 @@ static void *logger_thread() {
     (*env)->DeleteGlobalRef(env,_______method);
     (*env)->DeleteGlobalRef(env,_______obj);
     (*_______jvm)->DetachCurrentThread(_______jvm);
+    return NULL;
 }
 JNIEXPORT void JNICALL
 Java_pojlib_util_JREUtils_logToLogger(JNIEnv *env, jclass clazz, jobject javaLogger) {

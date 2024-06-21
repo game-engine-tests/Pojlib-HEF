@@ -64,11 +64,6 @@ public class Logger {
         }catch (IOException e){ e.printStackTrace();}
     }
 
-    /** Disables the printing */
-    public void shutdown(){
-        mLogStream.close();
-    }
-
     /**
      * Perform various checks to see if the log is safe to print
      * Subclasses may want to override this behavior
@@ -82,11 +77,6 @@ public class Logger {
     /** Small listener for anything listening to the log */
     public interface eventLogListener {
         void onEventLogged(String text);
-    }
-
-    /** Link a log listener to the logger */
-    public void setLogListener(eventLogListener logListener){
-        this.mLogListenerWeakReference = new WeakReference<>(logListener);
     }
 
     /** Notifies the event listener, if it exists */

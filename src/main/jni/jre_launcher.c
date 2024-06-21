@@ -167,7 +167,7 @@ JNIEXPORT jint JNICALL Java_com_oracle_dalvik_VMLauncher_launchJVM(JNIEnv *env, 
     res = launchJVM(argc, argv);
 
     LOGD("Going to free args");
-    free_char_array(env, argsArray, argv);
+    free_char_array(env, argsArray, (const char **) argv);
 
     LOGD("Free done");
 
