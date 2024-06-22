@@ -42,13 +42,15 @@ public class API {
             String accessToken,
             String userType,
             String memoryValue,
-            String questModel
+            String questModel,
+            String[] additionalArgs
     ) {
         String[] mcArgs = {"--username", username, "--version", versionName, "--gameDir", gameDir,
                 "--assetsDir", assetsDir, "--assetIndex", assetIndex, "--uuid", formattedUuid,
                 "--accessToken", accessToken, "--userType", userType, "--versionType", "release"};
 
         List<String> allArgs = new ArrayList<>(Arrays.asList(mcArgs));
+        allArgs.addAll(Arrays.asList(additionalArgs));
         JREUtils.redirectAndPrintJRELog();
         VLoader.setAndroidInitInfo(activity);
         try {
