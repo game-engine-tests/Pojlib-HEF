@@ -42,10 +42,6 @@ public class UnityPlayerActivity extends ActivityGroup implements IUnityPlayerLi
         mUnityPlayer = new UnityPlayer(this, this);
         setContentView(mUnityPlayer);
         mUnityPlayer.requestFocus();
-        File zip = new File(this.getFilesDir() + "/runtimes/JRE-22");
-        if (!zip.exists()) {
-            FileUtil.unzipArchiveFromAsset(this, "JRE-22.zip", this.getFilesDir() + "/runtimes/JRE-22");
-        }
     }
 
     @Override
