@@ -146,7 +146,7 @@ public class JREUtils {
         envMap.put("LD_LIBRARY_PATH", LD_LIBRARY_PATH);
         envMap.put("PATH", activity.getFilesDir() + "/runtimes/JRE-22/bin:" + Os.getenv("PATH"));
 
-        File customEnvFile = new File(Constants.USER_HOME, "custom_env.txt");
+        File customEnvFile = new File(activity.getFilesDir(), "custom_env.txt");
         if (customEnvFile.exists() && customEnvFile.isFile()) {
             BufferedReader reader = new BufferedReader(new FileReader(customEnvFile));
             String line;
