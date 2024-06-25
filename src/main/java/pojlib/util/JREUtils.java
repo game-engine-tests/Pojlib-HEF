@@ -170,7 +170,7 @@ public class JREUtils {
         setLdLibraryPath(jvmLibraryPath+":"+LD_LIBRARY_PATH);
     }
 
-    public static int launchJavaVM(Activity activity, List<String> JVMArgs, String versionName, String gameDir, String memoryValue, String questModel, String mainClass, int loaderType) throws Throwable {
+    public static int launchJavaVM(Activity activity, List<String> JVMArgs, String versionName, String gameDir, String memoryValue, String questModel, String mainClass) throws Throwable {
         relocateLibPath(activity);
         setJavaEnvironment(activity, gameDir, questModel);
 
@@ -191,18 +191,6 @@ public class JREUtils {
         userArgs.add("-Dorg.lwjgl.opengl.libname=libtinywrapper.so");
         userArgs.add("-Dorg.lwjgl.opengles.libname=" + "/system/lib64/libGLESv3.so");
         userArgs.add("-Dorg.lwjgl.egl.libname=" + "/system/lib64/libEGL_dri.so");
-        switch (loaderType) {
-            case 1:
-                userArgs.add("-Dforgewrapper.librariesDir=" + activity.getFilesDir() + "/libraries/");
-                userArgs.add("-Dforgewrapper.installer=" + activity.getFilesDir() + "/versions/" + versionName + "/forge-" + versionName + ".jar");
-                userArgs.add("-Dforgewrapper.minecraft=" + activity.getFilesDir() + "/versions/" + versionName + "/" + versionName + ".jar");
-                break;
-            case 2:
-                userArgs.add("-Dforgewrapper.librariesDir=" + activity.getFilesDir() + "/libraries/");
-                userArgs.add("-Dforgewrapper.installer=" + activity.getFilesDir() + "/versions/" + versionName + "/neoforge-" + versionName + ".jar");
-                userArgs.add("-Dforgewrapper.minecraft=" + activity.getFilesDir() + "/versions/" + versionName + "/" + versionName + ".jar");
-                break;
-        }
 
         userArgs.addAll(JVMArgs);
         System.out.println(JVMArgs);
