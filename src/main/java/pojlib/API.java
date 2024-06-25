@@ -43,6 +43,7 @@ public class API {
             String userType,
             String memoryValue,
             String questModel,
+            String mainClass,
             String[] additionalArgs
     ) {
         String[] mcArgs = {"--username", username, "--version", versionName, "--gameDir", gameDir,
@@ -54,7 +55,7 @@ public class API {
         JREUtils.redirectAndPrintJRELog();
         VLoader.setAndroidInitInfo(activity);
         try {
-            JREUtils.launchJavaVM(activity, allArgs, gameDir, memoryValue, questModel);
+            JREUtils.launchJavaVM(activity, allArgs, gameDir, memoryValue, questModel, mainClass);
         } catch (Throwable t) {
             throw new RuntimeException("JVM has stopped.", t);
         }
