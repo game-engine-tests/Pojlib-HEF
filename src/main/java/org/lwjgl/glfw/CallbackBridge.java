@@ -5,10 +5,10 @@ import android.os.Looper;
 
 public class CallbackBridge {
     public static final int ANDROID_TYPE_GRAB_STATE = 0;
-    
+
     public static final int CLIPBOARD_COPY = 2000;
     public static final int CLIPBOARD_PASTE = 2001;
-    
+
     public static volatile int physicalWidth, physicalHeight;
     public static float mouseX, mouseY;
     public static StringBuilder DEBUG_STRING = new StringBuilder();
@@ -23,7 +23,7 @@ public class CallbackBridge {
         handler.postDelayed(() -> putMouseEventWithCoords(button, false, x, y), 22);
 
     }
-    
+
     public static void putMouseEventWithCoords(int button, boolean isDown, float x, float y /* , int dz, long nanos */) {
         sendCursorPos(x, y);
         sendMouseKeycode(button, CallbackBridge.getCurrentMods(), isDown);
@@ -34,13 +34,13 @@ public class CallbackBridge {
         if (!threadAttached) {
             threadAttached = CallbackBridge.nativeAttachThreadToOther(true, true);
         }
-        
+
         DEBUG_STRING.append("CursorPos=").append(x).append(", ").append(y).append("\n");
         mouseX = x;
         mouseY = y;
         nativeSendCursorPos(mouseX, mouseY);
     }
-    
+
     public static void sendPrepareGrabInitialPos() {
         DEBUG_STRING.append("Prepare set grab initial posititon: ignored");
     }
@@ -88,9 +88,8 @@ public class CallbackBridge {
 
     public static void sendMouseKeycode(int keycode) {
         sendMouseKeycode(keycode, CallbackBridge.getCurrentMods(), true);
-        sendMouseKeycode(keycode, CallbackBridge.getCurrentMods(), false);
-    }
-    
+        sendMouseKeycode(keycode, CallbackBridge.getCurrentMods(), false);}
+
     public static void sendScroll(double xoffset, double yoffset) {
         DEBUG_STRING.append("ScrollX=").append(xoffset).append(",ScrollY=").append(yoffset);
         nativeSendScroll(xoffset, yoffset);
@@ -124,7 +123,7 @@ public class CallbackBridge {
     // GLFW: GLFWCharModsCallback deprecated, but is Minecraft still use?
     private static native boolean nativeSendCharMods(char codepoint, int mods);
     private static native void nativeSendKey(int key, int scancode, int action, int mods);
-    // private static native void nativeSendCursorEnter(int entered);
+    private static native void nativeSendCursorEnter(int entered);
     private static native void nativeSendCursorPos(float x, float y);
     private static native void nativeSendMouseButton(int button, int action, int mods);
     private static native void nativeSendScroll(double xoffset, double yoffset);

@@ -84,9 +84,9 @@ public class JREUtils {
         dlopen(sNativeLibDir + "/libopuscodec.so");
     }
 
-    public static void redirectAndPrintJRELog() {
+    public static void redirectAndPrintJRELog(Activity activity) {
         Log.v("jrelog","Log starts here");
-        JREUtils.logToLogger(Logger.getInstance());
+        JREUtils.logToLogger(Logger.getInstance(activity));
         new Thread(new Runnable(){
             int failTime = 0;
             ProcessBuilder logcatPb;
@@ -105,7 +105,7 @@ public class JREUtils {
                     int len;
                     while ((len = p.getInputStream().read(buf)) != -1) {
                         String currStr = new String(buf, 0, len);
-                        Logger.getInstance().appendToLog(currStr);
+                        Logger.getInstance(activity).appendToLog(currStr);
                     }
                             if (p.waitFor() != 0) {
                         Log.e("jrelog-logcat", "Logcat exited with code " + p.exitValue());
@@ -114,12 +114,12 @@ public class JREUtils {
                         if (failTime <= 10) {
                             run();
                         } else {
-                            Logger.getInstance().appendToLog("ERROR: Unable to get more log.");
+                            Logger.getInstance(activity).appendToLog("ERROR: Unable to get more log.");
                         }
                             }
                 } catch (Throwable e) {
                     Log.e("jrelog-logcat", "Exception on logging thread", e);
-                    Logger.getInstance().appendToLog("Exception on logging thread:\n" + Log.getStackTraceString(e));
+                    Logger.getInstance(activity).appendToLog("Exception on logging thread:\n" + Log.getStackTraceString(e));
                 }
             }
         }).start();
@@ -129,7 +129,7 @@ public class JREUtils {
     public static void relocateLibPath(Context ctx) {
         sNativeLibDir = ctx.getApplicationInfo().nativeLibraryDir;
 
-        LD_LIBRARY_PATH = ctx.getFilesDir() + "/runtimes/JRE-22/bin:" + ctx.getFilesDir() + "/runtimes/JRE-22/lib:" +
+        LD_LIBRARY_PATH = ctx.getFilesDir() + "/jdk/bin:" + ctx.getFilesDir() + "/jdk/lib:" +
                 "/system/lib64:/vendor/lib64:/vendor/lib64/hw:" +
                 sNativeLibDir;
     }
@@ -137,14 +137,14 @@ public class JREUtils {
     public static void setJavaEnvironment(Activity activity, String gameDir, String questModel) throws Throwable {
         Map<String, String> envMap = new ArrayMap<>();
         envMap.put("POJLIB_NATIVEDIR", activity.getApplicationInfo().nativeLibraryDir);
-        envMap.put("JAVA_HOME", activity.getFilesDir() + "/runtimes/JRE-22");
+        envMap.put("JAVA_HOME", activity.getFilesDir() + "/jdk");
         envMap.put("HOME", gameDir);
         envMap.put("TMPDIR", activity.getCacheDir().getAbsolutePath());
         envMap.put("VR_MODEL", questModel);
         envMap.put("POJLIB_RENDERER", "regal");
 
         envMap.put("LD_LIBRARY_PATH", LD_LIBRARY_PATH);
-        envMap.put("PATH", activity.getFilesDir() + "/runtimes/JRE-22/bin:" + Os.getenv("PATH"));
+        envMap.put("PATH", activity.getFilesDir() + "/jdk/bin:" + Os.getenv("PATH"));
 
         File customEnvFile = new File(activity.getFilesDir(), "custom_env.txt");
         if (customEnvFile.exists() && customEnvFile.isFile()) {
@@ -159,18 +159,18 @@ public class JREUtils {
         }
         envMap.put("LIBGL_ES", "2");
         for (Map.Entry<String, String> env : envMap.entrySet()) {
-            Logger.getInstance().appendToLog("Added custom env: " + env.getKey() + "=" + env.getValue());
+            Logger.getInstance(activity).appendToLog("Added custom env: " + env.getKey() + "=" + env.getValue());
             Os.setenv(env.getKey(), env.getValue(), true);
         }
 
-        File serverFile = new File(activity.getFilesDir() + "/runtimes/JRE-22/lib/server/libjvm.so");
-        jvmLibraryPath = activity.getFilesDir() + "/runtimes/JRE-22/lib/" + (serverFile.exists() ? "server" : "client");
+        File serverFile = new File(activity.getFilesDir() + "/jdk/lib/server/libjvm.so");
+        jvmLibraryPath = activity.getFilesDir() + "/jdk/lib/" + (serverFile.exists() ? "server" : "client");
         Log.d("DynamicLoader","Base LD_LIBRARY_PATH: "+LD_LIBRARY_PATH);
         Log.d("DynamicLoader","Internal LD_LIBRARY_PATH: "+jvmLibraryPath+":"+LD_LIBRARY_PATH);
         setLdLibraryPath(jvmLibraryPath+":"+LD_LIBRARY_PATH);
     }
 
-    public static int launchJavaVM(Activity activity, List<String> JVMArgs, String versionName, String gameDir, String memoryValue, String questModel, String mainClass) throws Throwable {
+    public static int launchJavaVM(Activity activity, List<String> JVMArgs, String[] mcArgs, String gameDir, String memoryValue, String questModel, String mainClass) throws Throwable {
         relocateLibPath(activity);
         setJavaEnvironment(activity, gameDir, questModel);
 
@@ -195,15 +195,16 @@ public class JREUtils {
         userArgs.addAll(JVMArgs);
         System.out.println(JVMArgs);
 
-        runtimeDir = activity.getFilesDir() + "/runtimes/JRE-22";
+        runtimeDir = activity.getFilesDir() + "/jdk";
 
         initJavaRuntime();
         chdir(gameDir);
         userArgs.add(0,"java"); //argv[0] is the program name according to C standard.
         userArgs.add(mainClass);
+        userArgs.addAll(Arrays.asList(mcArgs));
 
         int exitCode = VMLauncher.launchJVM(userArgs.toArray(new String[0]));
-        Logger.getInstance().appendToLog("Java Exit code: " + exitCode);
+        Logger.getInstance(activity).appendToLog("Java Exit code: " + exitCode);
         return exitCode;
     }
 
@@ -215,7 +216,7 @@ public class JREUtils {
      */
     public static List<String> getJavaArgs(Context ctx, String gameDir) {
         return new ArrayList<>(Arrays.asList(
-                "-Djava.home=" + new File(ctx.getFilesDir(), "runtimes/JRE-22"),
+                "-Djava.home=" + new File(ctx.getFilesDir(), "jdk"),
                 "-Djava.io.tmpdir=" + ctx.getCacheDir().getAbsolutePath(),
                 "-Duser.home=" + gameDir,
                 "-Duser.language=" + System.getProperty("user.language"),
@@ -229,7 +230,7 @@ public class JREUtils {
                 "-Dglfwstub.windowHeight=" + 720,
                 "-Dglfwstub.initEgl=false",
                 "-Dlog4j2.formatMsgNoLookups=true", //Log4j RCE mitigation
-                "-Dnet.minecraft.clientmodname=QCHEF"
+                "-Dnet.minecraft.clientmodname=Redacted"
         ));
     }
 

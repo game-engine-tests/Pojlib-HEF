@@ -1,5 +1,6 @@
 package pojlib.util;
 
+import android.app.Activity;
 import androidx.annotation.Keep;
 
 import java.io.File;
@@ -18,13 +19,8 @@ public class Logger {
     private PrintStream mLogStream;
     private WeakReference<eventLogListener> mLogListenerWeakReference = null;
 
-    /* No public construction */
-    private Logger(){
-        this("latestlog.txt");
-    }
-
-    private Logger(String fileName){
-        mLogFile = new File(Constants.USER_HOME, fileName);
+    private Logger(Activity activity){
+        mLogFile = new File(activity.getFilesDir(), "latestlog.txt");
         // Make a new instance of the log file
         mLogFile.delete();
         try {
@@ -34,12 +30,13 @@ public class Logger {
 
     }
 
-    private static final class SLoggerSingletonHolder {
-        static final Logger sLoggerSingleton = new Logger();
-    }
+    private static Logger logger;
 
-    public static Logger getInstance(){
-        return SLoggerSingletonHolder.sLoggerSingleton;
+    public static Logger getInstance(Activity activity){
+        if (logger == null) {
+            logger = new Logger(activity);
+        }
+        return logger;
     }
 
 

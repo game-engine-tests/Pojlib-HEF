@@ -50,12 +50,11 @@ public class API {
                 "--assetsDir", assetsDir, "--assetIndex", assetIndex, "--uuid", formattedUuid,
                 "--accessToken", accessToken, "--userType", userType, "--versionType", "release"};
 
-        List<String> allArgs = new ArrayList<>(Arrays.asList(mcArgs));
-        allArgs.addAll(Arrays.asList(additionalArgs));
-        JREUtils.redirectAndPrintJRELog();
+        List<String> allArgs = new ArrayList<>(Arrays.asList(additionalArgs));
+        JREUtils.redirectAndPrintJRELog(activity);
         VLoader.setAndroidInitInfo(activity);
         try {
-            JREUtils.launchJavaVM(activity, allArgs, versionName, gameDir, memoryValue, questModel, mainClass);
+            JREUtils.launchJavaVM(activity, allArgs, mcArgs, gameDir, memoryValue, questModel, mainClass);
         } catch (Throwable t) {
             throw new RuntimeException("JVM has stopped.", t);
         }
