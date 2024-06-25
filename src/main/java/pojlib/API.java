@@ -55,7 +55,7 @@ public class API {
         JREUtils.redirectAndPrintJRELog();
         VLoader.setAndroidInitInfo(activity);
         try {
-            JREUtils.launchJavaVM(activity, allArgs, gameDir, memoryValue, questModel, mainClass);
+            JREUtils.launchJavaVM(activity, allArgs, versionName, gameDir, memoryValue, questModel, mainClass);
         } catch (Throwable t) {
             throw new RuntimeException("JVM has stopped.", t);
         }
