@@ -29,6 +29,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Pojlib"
 include ':wrapper', ':wrapper:launcher', "wrapper:unityLibrary", "wrapper:unityLibrary:xrmanifest.androidlib"
 
