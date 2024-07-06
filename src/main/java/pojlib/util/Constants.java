@@ -9,7 +9,7 @@ public class Constants {
     @SuppressLint("SdCardPath")
     public static String getFilesDir(Context activity) {
         if (filesDir == null) {
-            filesDir = "/sdcard" + activity.getExternalFilesDir(null).getAbsolutePath().substring(19);
+            filesDir = activity.getFilesDir().getAbsolutePath();
         }
         return filesDir;
     }
