@@ -129,7 +129,7 @@ public class JREUtils {
     public static void relocateLibPath(Context ctx) {
         sNativeLibDir = ctx.getApplicationInfo().nativeLibraryDir;
 
-        LD_LIBRARY_PATH = ctx.getFilesDir() + "/jdk/bin:" + ctx.getFilesDir() + "/jdk/lib:" +
+        LD_LIBRARY_PATH = ctx.getExternalFilesDir(null) + "/jdk/bin:" + ctx.getExternalFilesDir(null) + "/jdk/lib:" +
                 "/system/lib64:/vendor/lib64:/vendor/lib64/hw:" +
                 sNativeLibDir;
     }
@@ -137,16 +137,16 @@ public class JREUtils {
     public static void setJavaEnvironment(Activity activity, String gameDir, String questModel) throws Throwable {
         Map<String, String> envMap = new ArrayMap<>();
         envMap.put("POJLIB_NATIVEDIR", activity.getApplicationInfo().nativeLibraryDir);
-        envMap.put("JAVA_HOME", activity.getFilesDir() + "/jdk");
+        envMap.put("JAVA_HOME", activity.getExternalFilesDir(null) + "/jdk");
         envMap.put("HOME", gameDir);
         envMap.put("TMPDIR", activity.getCacheDir().getAbsolutePath());
         envMap.put("VR_MODEL", questModel);
         envMap.put("POJLIB_RENDERER", "regal");
 
         envMap.put("LD_LIBRARY_PATH", LD_LIBRARY_PATH);
-        envMap.put("PATH", activity.getFilesDir() + "/jdk/bin:" + Os.getenv("PATH"));
+        envMap.put("PATH", activity.getExternalFilesDir(null) + "/jdk/bin:" + Os.getenv("PATH"));
 
-        File customEnvFile = new File(activity.getFilesDir(), "custom_env.txt");
+        File customEnvFile = new File(activity.getExternalFilesDir(null), "custom_env.txt");
         if (customEnvFile.exists() && customEnvFile.isFile()) {
             BufferedReader reader = new BufferedReader(new FileReader(customEnvFile));
             String line;
@@ -163,8 +163,8 @@ public class JREUtils {
             Os.setenv(env.getKey(), env.getValue(), true);
         }
 
-        File serverFile = new File(activity.getFilesDir() + "/jdk/lib/server/libjvm.so");
-        jvmLibraryPath = activity.getFilesDir() + "/jdk/lib/" + (serverFile.exists() ? "server" : "client");
+        File serverFile = new File(activity.getExternalFilesDir(null) + "/jdk/lib/server/libjvm.so");
+        jvmLibraryPath = activity.getExternalFilesDir(null) + "/jdk/lib/" + (serverFile.exists() ? "server" : "client");
         Log.d("DynamicLoader","Base LD_LIBRARY_PATH: "+LD_LIBRARY_PATH);
         Log.d("DynamicLoader","Internal LD_LIBRARY_PATH: "+jvmLibraryPath+":"+LD_LIBRARY_PATH);
         setLdLibraryPath(jvmLibraryPath+":"+LD_LIBRARY_PATH);
@@ -195,7 +195,7 @@ public class JREUtils {
         userArgs.addAll(JVMArgs);
         System.out.println(JVMArgs);
 
-        runtimeDir = activity.getFilesDir() + "/jdk";
+        runtimeDir = activity.getExternalFilesDir(null) + "/jdk";
 
         initJavaRuntime();
         chdir(gameDir);
@@ -216,7 +216,7 @@ public class JREUtils {
      */
     public static List<String> getJavaArgs(Context ctx, String gameDir) {
         return new ArrayList<>(Arrays.asList(
-                "-Djava.home=" + new File(ctx.getFilesDir(), "jdk"),
+                "-Djava.home=" + new File(ctx.getExternalFilesDir(null), "jdk"),
                 "-Djava.io.tmpdir=" + ctx.getCacheDir().getAbsolutePath(),
                 "-Duser.home=" + gameDir,
                 "-Duser.language=" + System.getProperty("user.language"),

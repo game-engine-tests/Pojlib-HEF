@@ -13,14 +13,14 @@ import java.lang.ref.WeakReference;
  */
 @Keep
 public class Logger {
-
+    // getFilesDir
     /* Instance variables */
     private final File mLogFile;
     private PrintStream mLogStream;
     private WeakReference<eventLogListener> mLogListenerWeakReference = null;
 
     private Logger(Activity activity){
-        mLogFile = new File(activity.getFilesDir(), "latestlog.txt");
+        mLogFile = new File(activity.getExternalFilesDir(null), "latestlog.txt");
         // Make a new instance of the log file
         mLogFile.delete();
         try {
