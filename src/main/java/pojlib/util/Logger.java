@@ -20,7 +20,7 @@ public class Logger {
     private WeakReference<eventLogListener> mLogListenerWeakReference = null;
 
     private Logger(Activity activity){
-        mLogFile = new File(Constants.getFilesDir(activity), "latestlog.txt");
+        mLogFile = new File(activity.getExternalFilesDir(null), "latestlog.txt");
         // Make a new instance of the log file
         mLogFile.delete();
         try {

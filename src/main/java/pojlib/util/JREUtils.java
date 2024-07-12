@@ -214,7 +214,7 @@ public class JREUtils {
      */
     public static List<String> getJavaArgs(Context ctx, String gameDir) {
         return new ArrayList<>(Arrays.asList(
-                "-Djava.home=" + new File(Constants.getFilesDir(ctx), "jdk"),
+                "-Djava.home=" + new File(Constants.getFilesDir(ctx), "runtimes/JDK"),
                 "-Djava.io.tmpdir=" + ctx.getCacheDir().getAbsolutePath(),
                 "-Duser.home=" + gameDir,
                 "-Duser.language=" + System.getProperty("user.language"),
