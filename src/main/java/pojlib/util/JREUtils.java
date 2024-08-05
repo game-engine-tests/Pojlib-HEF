@@ -168,7 +168,7 @@ public class JREUtils {
         setLdLibraryPath(jvmLibraryPath+":"+LD_LIBRARY_PATH);
     }
 
-    public static int launchJavaVM(Activity activity, List<String> JVMArgs, String[] mcArgs, String gameDir, String memoryValue, String questModel, String mainClass) throws Throwable {
+    public static int launchJavaVM(Activity activity, List<String> JVMArgs, String[] mcArgs, String[] mcAdditionalArgs, String gameDir, String memoryValue, String questModel, String mainClass) throws Throwable {
         relocateLibPath(activity);
         setJavaEnvironment(activity, gameDir, questModel);
 
@@ -200,6 +200,7 @@ public class JREUtils {
         userArgs.add(0,"java"); //argv[0] is the program name according to C standard.
         userArgs.add(mainClass);
         userArgs.addAll(Arrays.asList(mcArgs));
+        userArgs.addAll(Arrays.asList(mcAdditionalArgs));
 
         int exitCode = VMLauncher.launchJVM(userArgs.toArray(new String[0]));
         Logger.getInstance(activity).appendToLog("Java Exit code: " + exitCode);

@@ -45,7 +45,8 @@ public class API {
             String memoryValue,
             String questModel,
             String mainClass,
-            String[] additionalArgs
+            String[] additionalArgs,
+            String[] mcAdditionalArgs
     ) {
         String[] mcArgs = {"--username", username, "--version", versionName, "--gameDir", gameDir,
                 "--assetsDir", assetsDir, "--assetIndex", assetIndex, "--uuid", formattedUuid,
@@ -55,7 +56,7 @@ public class API {
         JREUtils.redirectAndPrintJRELog(activity);
         VLoader.setAndroidInitInfo(activity);
         try {
-            JREUtils.launchJavaVM(activity, allArgs, mcArgs, gameDir, memoryValue, questModel, mainClass);
+            JREUtils.launchJavaVM(activity, allArgs, mcArgs, mcAdditionalArgs, gameDir, memoryValue, questModel, mainClass);
         } catch (Throwable t) {
             throw new RuntimeException("JVM has stopped.", t);
         }
