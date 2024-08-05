@@ -41,6 +41,7 @@ public class API {
             String formattedUuid,
             String accessToken,
             String userType,
+            String versionType,
             String memoryValue,
             String questModel,
             String mainClass,
@@ -48,7 +49,7 @@ public class API {
     ) {
         String[] mcArgs = {"--username", username, "--version", versionName, "--gameDir", gameDir,
                 "--assetsDir", assetsDir, "--assetIndex", assetIndex, "--uuid", formattedUuid,
-                "--accessToken", accessToken, "--userType", userType, "--versionType", "release"};
+                "--accessToken", accessToken, "--userType", userType, "--versionType", versionType};
 
         List<String> allArgs = new ArrayList<>(Arrays.asList(additionalArgs));
         JREUtils.redirectAndPrintJRELog(activity);
