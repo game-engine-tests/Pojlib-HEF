@@ -168,11 +168,11 @@ public class JREUtils {
         setLdLibraryPath(jvmLibraryPath+":"+LD_LIBRARY_PATH);
     }
 
-    public static int launchJavaVM(Activity activity, List<String> JVMArgs, String[] mcArgs, String[] mcAdditionalArgs, String gameDir, String memoryValue, String questModel, String mainClass) throws Throwable {
+    public static int launchJavaVM(Activity activity, List<String> JVMArgs, String[] mcArgs, String[] mcAdditionalArgs, String gameDir, String memoryValue, String questModel, String mainClass, String jvmHome) throws Throwable {
         relocateLibPath(activity);
         setJavaEnvironment(activity, gameDir, questModel);
 
-        List<String> userArgs = getJavaArgs(activity, gameDir);
+        List<String> userArgs = getJavaArgs(activity, gameDir, jvmHome);
 
         //Add automatically generated args
 
@@ -193,7 +193,7 @@ public class JREUtils {
         userArgs.addAll(JVMArgs);
         System.out.println(JVMArgs);
 
-        runtimeDir = activity.getFilesDir() + "/runtimes/JDK";
+        runtimeDir = jvmHome;
 
         initJavaRuntime();
         chdir(gameDir);
@@ -213,9 +213,9 @@ public class JREUtils {
      * @param ctx The application context
      * @return A list filled with args.
      */
-    public static List<String> getJavaArgs(Context ctx, String gameDir) {
+    public static List<String> getJavaArgs(Context ctx, String gameDir, String jvmHome) {
         return new ArrayList<>(Arrays.asList(
-                "-Djava.home=" + new File(Constants.getFilesDir(ctx), "runtimes/JDK"),
+                "-Djava.home=" + jvmHome,
                 "-Djava.io.tmpdir=" + ctx.getCacheDir().getAbsolutePath(),
                 "-Duser.home=" + gameDir,
                 "-Duser.language=" + System.getProperty("user.language"),
