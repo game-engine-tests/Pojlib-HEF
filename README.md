@@ -1,6 +1,5 @@
-# Pojlib | Minecraft Launcher Core
+# Pojlib HEF | Minecraft Launcher Core Based on [Pojlib](https://github.com/QuestCraftPlusPlus/Pojlib)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
-![Lines of code](https://img.shields.io/tokei/lines/github/questcraftplusplus/pojlib?style=flat)
 
 A Minecraft: Java Edition launcher library partially made with elements from PojavLauncher.
 
@@ -19,7 +18,10 @@ Make sure your pull request describes exactly what the code does and explains wh
 
 
 ## Credits & Third Party Components
-### Developers:
+### Pojlib HEF Developers:
+
+* [@Novampr](https://github.com/Novampr) | Maintainer
+### Pojlib Developers:
 
 * [@TheJudge156](https://github.com/thejudge156) | Senior Maintainer
 
@@ -31,3 +33,12 @@ Make sure your pull request describes exactly what the code does and explains wh
 - [PojavLauncher](https://github.com/PojavLauncherTeam/PojavLauncher) (Pojlib Base application): [GNU GPLv3](https://github.com/khanhduytran0/PojavLauncher/blob/master/LICENSE).
 
 - [OpenComposite](https://gitlab.com/znixian/OpenOVR) (Used for OpenVR to OpenXR interpretation): [GNU GPLv3](https://gitlab.com/znixian/OpenOVR/-/blob/openxr/LICENSE.txt).
+
+# Changes compared to Pojlib
+- Moved to Wrapper
+  - Logging in
+  - Instance Management
+  - Mod Manager (Currently not reimplemented)
+- Added in Pojlib HEF
+  - Support for FML based loaders (Lex/NeoForge)
+  - Better API call to launch the game with full parameter control
