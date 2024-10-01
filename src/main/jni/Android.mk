@@ -9,6 +9,7 @@ LOCAL_PATH := $(HERE_PATH)
 
 include $(CLEAR_VARS)
 LOCAL_MODULE := mcxr-loader
+LOCAL_LDLIBS := -lGLESv3
 LOCAL_SRC_FILES := mcxr_loader.cpp
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/
 include $(BUILD_SHARED_LIBRARY)
