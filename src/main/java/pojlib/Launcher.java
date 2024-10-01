@@ -28,10 +28,6 @@ import com.unity3d.player.IUnityPlayerLifecycleEvents;
 import com.unity3d.player.UnityPlayer;
 import org.lwjgl.glfw.CallbackBridge;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Objects;
-
 import fr.spse.gamepad_remapper.RemapperManager;
 import fr.spse.gamepad_remapper.RemapperView;
 import pojlib.input.AWTInputBridge;
@@ -40,11 +36,8 @@ import pojlib.input.GrabListener;
 import pojlib.input.LwjglGlfwKeycode;
 import pojlib.input.gamepad.DefaultDataProvider;
 import pojlib.input.gamepad.Gamepad;
-import pojlib.util.Constants;
-import pojlib.util.FileUtil;
-import pojlib.util.Logger;
 
-public class UnityPlayerActivity extends ActivityGroup implements IUnityPlayerLifecycleEvents, GrabListener {
+public class Launcher extends ActivityGroup implements IUnityPlayerLifecycleEvents, GrabListener {
     protected UnityPlayer mUnityPlayer; // don't change the name of this variable; referenced from native code
     public static volatile ClipboardManager GLOBAL_CLIPBOARD;
     private PowerManager.WakeLock wakeLock;
@@ -88,19 +81,6 @@ public class UnityPlayerActivity extends ActivityGroup implements IUnityPlayerLi
         setContentView(mUnityPlayer);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         mUnityPlayer.requestFocus();
-<<<<<<< HEAD:src/main/java/pojlib/meow.java
-=======
-
-        File jre = new File(this.getFilesDir() + "/runtimes/JRE-22");
-        if (!jre.exists()) {
-            FileUtil.unzipArchiveFromAsset(this, "JRE-22.zip", this.getFilesDir() + "/runtimes/JRE-22");
-        }
-
-        try {
-            installLWJGL(this);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
 
         updateWindowSize(this);
         GLOBAL_CLIPBOARD = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
@@ -122,21 +102,6 @@ public class UnityPlayerActivity extends ActivityGroup implements IUnityPlayerLi
                 .remapDpad(true));
 
         CallbackBridge.nativeSetUseInputStackQueue(true);
-    }
-
-    public static String installLWJGL(Activity activity) throws IOException {
-        File lwjgl = new File(Constants.USER_HOME + "/lwjgl3/lwjgl-glfw-classes.jar");
-        byte[] lwjglAsset = FileUtil.loadFromAssetToByte(activity, "lwjgl/lwjgl-glfw-classes.jar");
-
-        if (!lwjgl.exists()) {
-            Objects.requireNonNull(lwjgl.getParentFile()).mkdirs();
-            FileUtil.write(lwjgl.getAbsolutePath(), lwjglAsset);
-        } else if (!FileUtil.matchingAssetFile(lwjgl, lwjglAsset)) {
-            Objects.requireNonNull(lwjgl.getParentFile()).mkdirs();
-            FileUtil.write(lwjgl.getAbsolutePath(), lwjglAsset);
-        }
-
-        return lwjgl.getAbsolutePath();
     }
 
     public static DisplayMetrics getDisplayMetrics(Activity activity) {
@@ -355,7 +320,6 @@ public class UnityPlayerActivity extends ActivityGroup implements IUnityPlayerLi
         @Override
     public boolean onKeyMultiple(int keyCode, int repeatCount, KeyEvent event) {
         return super.onKeyMultiple(keyCode, repeatCount, event);
->>>>>>> upstream/QuestCraft:src/main/java/pojlib/UnityPlayerActivity.java
     }
 
     // When Unity player unloaded move task to background
@@ -446,11 +410,7 @@ public class UnityPlayerActivity extends ActivityGroup implements IUnityPlayerLi
         mUnityPlayer.windowFocusChanged(hasFocus);
     }
 
-<<<<<<< HEAD:src/main/java/pojlib/meow.java
-    // For some reason the multiple key-event type is not supported by the ndk.
-=======
 /*    // For some reason the multiple keyevent type is not supported by the ndk.
->>>>>>> upstream/QuestCraft:src/main/java/pojlib/UnityPlayerActivity.java
     // Force event injection by overriding dispatchKeyEvent().
     @Override public boolean dispatchKeyEvent(KeyEvent event)
     {
