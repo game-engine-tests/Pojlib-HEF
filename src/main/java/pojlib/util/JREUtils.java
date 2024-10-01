@@ -22,6 +22,8 @@ public class JREUtils {
     private JREUtils() {}
 
     public static String LD_LIBRARY_PATH;
+    public static Map<String, String> jreReleaseList;
+    public static String instanceHome;
     public static String jvmLibraryPath;
     private static String sNativeLibDir;
     private static String runtimeDir;
@@ -79,7 +81,6 @@ public class JREUtils {
             dlopen(f.getAbsolutePath());
         }
         dlopen(sNativeLibDir + "/libopenal.so");
-        dlopen(sNativeLibDir + "/libopuscodec.so");
     }
 
     public static void redirectAndPrintJRELog(Activity activity) {
@@ -94,7 +95,7 @@ public class JREUtils {
                     if (logcatPb == null) {
                         logcatPb = new ProcessBuilder().command("logcat", "-v", "brief", "-s", "jrelog:I", "LIBGL:I").redirectErrorStream(true);
                     }
-                            Log.i("jrelog-logcat","Clearing logcat");
+                    Log.i("jrelog-logcat","Clearing logcat");
                     new ProcessBuilder().command("logcat", "-c").redirectErrorStream(true).start();
                     Log.i("jrelog-logcat","Starting logcat");
                     java.lang.Process p = logcatPb.start();
@@ -105,7 +106,7 @@ public class JREUtils {
                         String currStr = new String(buf, 0, len);
                         Logger.getInstance(activity).appendToLog(currStr);
                     }
-                            if (p.waitFor() != 0) {
+                    if (p.waitFor() != 0) {
                         Log.e("jrelog-logcat", "Logcat exited with code " + p.exitValue());
                         failTime++;
                         Log.i("jrelog-logcat", (failTime <= 10 ? "Restarting logcat" : "Too many restart fails") + " (attempt " + failTime + "/10");
@@ -114,7 +115,7 @@ public class JREUtils {
                         } else {
                             Logger.getInstance(activity).appendToLog("ERROR: Unable to get more log.");
                         }
-                            }
+                    }
                 } catch (Throwable e) {
                     Log.e("jrelog-logcat", "Exception on logging thread", e);
                     Logger.getInstance(activity).appendToLog("Exception on logging thread:\n" + Log.getStackTraceString(e));
@@ -135,14 +136,14 @@ public class JREUtils {
     public static void setJavaEnvironment(Activity activity, String gameDir, String questModel, String jvmHome) throws Throwable {
         Map<String, String> envMap = new ArrayMap<>();
         envMap.put("POJLIB_NATIVEDIR", activity.getApplicationInfo().nativeLibraryDir);
-        envMap.put("JAVA_HOME", jvmHome);
+        envMap.put("JAVA_HOME", activity.getFilesDir() + "/runtimes/JRE-22");
         envMap.put("HOME", gameDir);
         envMap.put("TMPDIR", activity.getCacheDir().getAbsolutePath());
         envMap.put("VR_MODEL", questModel);
         envMap.put("POJLIB_RENDERER", "regal");
 
         envMap.put("LD_LIBRARY_PATH", LD_LIBRARY_PATH);
-        envMap.put("PATH", jvmHome + "/bin:" + Os.getenv("PATH"));
+        envMap.put("PATH", activity.getFilesDir() + "/runtimes/JRE-22/bin:" + Os.getenv("PATH"));
 
         File customEnvFile = new File(Constants.getFilesDir(activity), "custom_env.txt");
         if (customEnvFile.exists() && customEnvFile.isFile()) {
@@ -161,8 +162,8 @@ public class JREUtils {
             Os.setenv(env.getKey(), env.getValue(), true);
         }
 
-        File serverFile = new File(jvmHome + "/lib/server/libjvm.so");
-        jvmLibraryPath = jvmHome + "/lib/" + (serverFile.exists() ? "server" : "client");
+        File serverFile = new File(activity.getFilesDir() + "/runtimes/JRE-22/lib/server/libjvm.so");
+        jvmLibraryPath = activity.getFilesDir() + "/runtimes/JRE-22/lib/" + (serverFile.exists() ? "server" : "client");
         Log.d("DynamicLoader","Base LD_LIBRARY_PATH: "+LD_LIBRARY_PATH);
         Log.d("DynamicLoader","Internal LD_LIBRARY_PATH: "+jvmLibraryPath+":"+LD_LIBRARY_PATH);
         setLdLibraryPath(jvmLibraryPath+":"+LD_LIBRARY_PATH);
@@ -183,17 +184,19 @@ public class JREUtils {
         userArgs.add("-XX:+ZGenerational");
         userArgs.add("-XX:+UnlockExperimentalVMOptions");
         userArgs.add("-XX:+AllowUserSignalHandlers");
+        userArgs.add("-XX:+UnlockDiagnosticVMOptions");
+        userArgs.add("-XX:-ImplicitNullChecks");
         userArgs.add("-XX:+DisableExplicitGC");
         userArgs.add("-XX:+UseCriticalJavaThreadPriority");
 
         userArgs.add("-Dorg.lwjgl.opengl.libname=libtinywrapper.so");
-        userArgs.add("-Dorg.lwjgl.opengles.libname=" + "/system/lib64/libGLESv3.so");
-        userArgs.add("-Dorg.lwjgl.egl.libname=" + "/system/lib64/libEGL_dri.so");
+        userArgs.add("-Dorg.lwjgl.opengles.libname=/system/lib64/libGLESv3.so");
+        userArgs.add("-Dorg.lwjgl.egl.libname=/system/lib64/libEGL_dri.so");
 
         userArgs.addAll(JVMArgs);
         System.out.println(JVMArgs);
 
-        runtimeDir = jvmHome;
+        runtimeDir = activity.getFilesDir() + "/runtimes/JRE-22";
 
         initJavaRuntime();
         chdir(gameDir);
@@ -229,12 +232,69 @@ public class JREUtils {
                 "-Dglfwstub.windowHeight=" + 720,
                 "-Dglfwstub.initEgl=false",
                 "-Dlog4j2.formatMsgNoLookups=true", //Log4j RCE mitigation
-                "-Dnet.minecraft.clientmodname=Redacted"
+                "-Dnet.minecraft.clientmodname=Redacted",
+                "-Dsodium.checks.issue2561=false"
         ));
     }
 
+    /**
+     * Parse and separate java arguments in a user friendly fashion
+     * It supports multi line and absence of spaces between arguments
+     * The function also supports auto-removal of improper arguments, although it may miss some.
+     *
+     * @param args The un-parsed argument list.
+     * @return Parsed args as an ArrayList
+     */
+    public static ArrayList<String> parseJavaArguments(String args){
+        ArrayList<String> parsedArguments = new ArrayList<>(0);
+        args = args.trim().replace(" ", "");
+        //For each prefixes, we separate args.
+        for(String prefix : new String[]{"-XX:-","-XX:+", "-XX:","--","-"}){
+            while (true){
+                int start = args.indexOf(prefix);
+                if(start == -1) break;
+                //Get the end of the current argument
+                int end = args.indexOf("-", start + prefix.length());
+                if(end == -1) end = args.length();
+
+                //Extract it
+                String parsedSubString = args.substring(start, end);
+                args = args.replace(parsedSubString, "");
+
+                //Check if two args aren't bundled together by mistake
+                if(parsedSubString.indexOf('=') == parsedSubString.lastIndexOf('=')) {
+                    int arraySize = parsedArguments.size();
+                    if(arraySize > 0){
+                        String lastString = parsedArguments.get(arraySize - 1);
+                        // Looking for list elements
+                        if(lastString.charAt(lastString.length() - 1) == ',' ||
+                                parsedSubString.contains(",")){
+                            parsedArguments.set(arraySize - 1, lastString + parsedSubString);
+                            continue;
+                        }
+                    }
+                    parsedArguments.add(parsedSubString);
+                }
+                else Log.w("JAVA ARGS PARSER", "Removed improper arguments: " + parsedSubString);
+            }
+        }
+        return parsedArguments;
+    }
+
+    /**
+     * Open the render library in accordance to the settings.
+     * It will fallback if it fails to load the library.
+     * @return The name of the loaded library
+     */
+    public static String loadGraphicsLibrary(){
+        return "libtinywrapper.so";
+    }
+
+    public static native long getEGLContextPtr();
+    public static native long getEGLDisplayPtr();
+    public static native long getEGLConfigPtr();
     public static native int chdir(String path);
-    public static native void logToLogger(Logger logger);
+    public static native void logToLogger(final Logger logger);
     public static native boolean dlopen(String libPath);
     public static native void setLdLibraryPath(String ldLibraryPath);
 

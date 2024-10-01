@@ -7,6 +7,7 @@ android {
     compileSdkVersion = "android-32"
     defaultConfig {
         minSdkVersion(29)
+        multiDexEnabled true
         ndk.stl = "c++_shared"
     }
 
@@ -34,10 +35,14 @@ dependencies {
 
     // This dependency is used internally, and not exposed to consumers on their own compile classpath.
     implementation("com.google.guava:guava:31.0.1-jre")
-}
-
-dependencies {
     implementation("org.jetbrains:annotations:24.0.1")
-    implementation("androidx.annotation:annotation:1.8.0")
-    implementation(":classes")
+    implementation("com.google.code.gson:gson:2.10.1")
+    implementation("org.json:json:20220924")
+    implementation("commons-io:commons-io:2.13.0")
+    implementation("commons-codec:commons-codec:1.15")
+    implementation("androidx.annotation:annotation:1.7.1")
+    implementation("androidx.core:core:1.13.1")
+    implementation("com.microsoft.azure:msal4j:1.14.0")
+    implementation("com.github.Mathias-Boulay:android_gamepad_remapper:2.0.3")
+    implementation files('libs/unity_classes.jar')
 }

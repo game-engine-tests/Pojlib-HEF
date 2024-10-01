@@ -15,6 +15,9 @@ import java.util.List;
  * having to make changes to either project deeply.
  */
 public class API {
+    // Values to store for use in any external java files
+    public static String gameDir;
+
     /**
      * Launch the game
      *
