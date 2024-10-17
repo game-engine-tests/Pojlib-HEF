@@ -18,6 +18,12 @@ public class API {
     // Values to store for use in any external java files
     public static String gameDir;
 
+    public static Activity getActivity() {
+        return activity;
+    }
+
+    private static Activity activity;
+
     /**
      * Launch the game
      *
@@ -52,6 +58,7 @@ public class API {
             String[] mcAdditionalArgs,
             String jvmHome
     ) {
+        API.activity = activity;
         VLoader.setActivity(activity);
 
         String[] mcArgs = {"--username", username, "--version", versionName, "--gameDir", gameDir,
