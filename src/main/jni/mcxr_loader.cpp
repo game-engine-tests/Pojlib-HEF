@@ -18,13 +18,13 @@ jint JNI_OnLoad(JavaVM* vm, void* reserved) {
 
 JNIEXPORT JNICALL
 extern "C" jlong
-Java_net_sorenon_MCOpenXRNativeLoader_getJVMPtr(JNIEnv *env, jclass clazz) {
+Java_net_sorenon_mcxr_play_MCXRNativeLoad_getJVMPtr(JNIEnv *env, jclass clazz) {
     return reinterpret_cast<jlong>(&jvm);
 }
 
 JNIEXPORT JNICALL
 extern "C" jlong
-Java_net_sorenon_MCOpenXRNativeLoader_getApplicationActivityPtr(JNIEnv *env, jclass clazz) {
+Java_net_sorenon_mcxr_play_MCXRNativeLoad_getApplicationActivityPtr(JNIEnv *env, jclass clazz) {
     return reinterpret_cast<jlong>(&app);
 }
 

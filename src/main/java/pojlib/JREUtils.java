@@ -1,4 +1,4 @@
-package pojlib.util;
+package pojlib;
 
 import android.app.Activity;
 import android.content.Context;
@@ -132,13 +132,13 @@ public class JREUtils {
                 sNativeLibDir;
     }
 
-    public static void setJavaEnvironment(Activity activity, String gameDir, String questModel, String jvmHome) throws Throwable {
+    public static void setJavaEnvironment(Activity activity, String gameDir, String vrModel, String jvmHome) throws Throwable {
         Map<String, String> envMap = new ArrayMap<>();
         envMap.put("POJLIB_NATIVEDIR", activity.getApplicationInfo().nativeLibraryDir);
         envMap.put("JAVA_HOME", jvmHome);
         envMap.put("HOME", gameDir);
         envMap.put("TMPDIR", activity.getCacheDir().getAbsolutePath());
-        envMap.put("VR_MODEL", questModel);
+        envMap.put("VR_MODEL", vrModel);
         envMap.put("POJLIB_RENDERER", "regal");
 
         envMap.put("LD_LIBRARY_PATH", LD_LIBRARY_PATH);
@@ -168,9 +168,9 @@ public class JREUtils {
         setLdLibraryPath(jvmLibraryPath+":"+LD_LIBRARY_PATH);
     }
 
-    public static int launchJavaVM(Activity activity, List<String> JVMArgs, String[] mcArgs, String[] mcAdditionalArgs, String gameDir, String memoryValue, String questModel, String mainClass, String jvmHome) throws Throwable {
+    public static int launchJavaVM(Activity activity, List<String> JVMArgs, String[] mcArgs, String[] mcAdditionalArgs, String gameDir, String memoryValue, String vrModel, String mainClass, String jvmHome) throws Throwable {
         relocateLibPath(activity, jvmHome);
-        setJavaEnvironment(activity, gameDir, questModel, jvmHome);
+        setJavaEnvironment(activity, gameDir, vrModel, jvmHome);
 
         List<String> userArgs = getJavaArgs(activity, gameDir, jvmHome);
 
@@ -180,15 +180,15 @@ public class JREUtils {
         userArgs.add("-Xmx" + memoryValue + "M");
 
         userArgs.add("-XX:+UseZGC");
-        userArgs.add("-XX:+ZGenerational");
+        userArgs.add("-XX:+ZGenerational"); // Not compatible with Java 17, perhaps these should be determined by the launcher and not Pojlib?
         userArgs.add("-XX:+UnlockExperimentalVMOptions");
-        userArgs.add("-XX:+AllowUserSignalHandlers");
+        userArgs.add("-XX:+UseSignalChaining");
         userArgs.add("-XX:+DisableExplicitGC");
         userArgs.add("-XX:+UseCriticalJavaThreadPriority");
 
         userArgs.add("-Dorg.lwjgl.opengl.libname=libtinywrapper.so");
-        userArgs.add("-Dorg.lwjgl.opengles.libname=" + "/system/lib64/libGLESv3.so");
-        userArgs.add("-Dorg.lwjgl.egl.libname=" + "/system/lib64/libEGL_dri.so");
+        userArgs.add("-Dorg.lwjgl.opengles.libname=/system/lib64/libGLESv3.so");
+        userArgs.add("-Dorg.lwjgl.egl.libname=/system/lib64/libEGL_dri.so");
 
         userArgs.addAll(JVMArgs);
         System.out.println(JVMArgs);
@@ -229,7 +229,7 @@ public class JREUtils {
                 "-Dglfwstub.windowHeight=" + 720,
                 "-Dglfwstub.initEgl=false",
                 "-Dlog4j2.formatMsgNoLookups=true", //Log4j RCE mitigation
-                "-Dnet.minecraft.clientmodname=Redacted"
+                "-Dnet.minecraft.clientmodname=Derifted"
         ));
     }
 

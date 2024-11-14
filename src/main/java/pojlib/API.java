@@ -2,33 +2,29 @@ package pojlib;
 
 import android.app.Activity;
 
-import pojlib.util.JREUtils;
-import pojlib.util.VLoader;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 /**
- * This class is the only class used by the launcher to communicate and talk to pojlib. This keeps pojlib and launcher separate.
- * If we ever make breaking change to either project, we can make a new api class to accommodate for those changes without
- * having to make changes to either project deeply.
+ * This class is used to prepare for game launch, prepares final java arguments and sets up logging,
+ * provides the aarguments for Regal and gives the JVM certain information useful for debugging.
  */
 public class API {
     /**
      * Launch the game
      *
-     * @param activity The activity of android
-     * @param username the user's username
-     * @param versionName the minecraft version name
-     * @param gameDir the game directory, kind of like ".minecraft" for this
-     * @param assetsDir the equivelant of .minecraft/assets
-     * @param assetIndex this is the assetindex minecraft lists from the api
-     * @param formattedUuid this is the user's uuid
-     * @param accessToken the minecraft bearer token
-     * @param userType should always be "msa", used to be able to do "mojang"
-     * @param memoryValue the amount of ram to give to minecraft
-     * @param questModel the quest's model
+     * @param activity The activity of Android
+     * @param username The user's username
+     * @param versionName The Minecraft version name
+     * @param gameDir The game directory, kind of like ".minecraft" for this
+     * @param assetsDir The equivelant of .minecraft/assets
+     * @param assetIndex This is the asset index Minecraft lists from the API
+     * @param formattedUuid The user's UUID
+     * @param accessToken The Minecraft login token
+     * @param userType Should be "msa" always, "mojang" is legacy
+     * @param memoryValue The amount of ram to allocate to Minecraft
+     * @param vrModel The headset's model
      */
     @SuppressWarnings("unused")
     public static void startGame(
@@ -43,7 +39,7 @@ public class API {
             String userType,
             String versionType,
             String memoryValue,
-            String questModel,
+            String vrModel,
             String mainClass,
             String[] additionalArgs,
             String[] mcAdditionalArgs,
@@ -59,7 +55,7 @@ public class API {
         JREUtils.redirectAndPrintJRELog(activity);
         VLoader.setAndroidInitInfo(activity);
         try {
-            JREUtils.launchJavaVM(activity, allArgs, mcArgs, mcAdditionalArgs, gameDir, memoryValue, questModel, mainClass, jvmHome);
+            JREUtils.launchJavaVM(activity, allArgs, mcArgs, mcAdditionalArgs, gameDir, memoryValue, vrModel, mainClass, jvmHome);
         } catch (Throwable t) {
             throw new RuntimeException("JVM has stopped.", t);
         }

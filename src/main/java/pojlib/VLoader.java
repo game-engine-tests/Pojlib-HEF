@@ -1,4 +1,4 @@
-package pojlib.util;
+package pojlib;
 
 import android.app.Activity;
 import android.content.Context;

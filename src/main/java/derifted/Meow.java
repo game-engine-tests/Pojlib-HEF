@@ -1,4 +1,4 @@
-package pojlib;
+package derifted;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -13,7 +13,7 @@ import androidx.annotation.NonNull;
 import com.unity3d.player.IUnityPlayerLifecycleEvents;
 import com.unity3d.player.UnityPlayer;
 
-public class meow extends Activity implements IUnityPlayerLifecycleEvents
+public class Meow extends Activity implements IUnityPlayerLifecycleEvents
 {
     protected UnityPlayer mUnityPlayer; // don't change the name of this variable; referenced from native code
 
