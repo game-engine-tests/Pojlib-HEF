@@ -1,0 +1,536 @@
+[33mcommit 58ab8d1ca6009ce8bafdc5a965784b546e2bd999[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mPojlib-HEF[m[33m)[m
+Merge: 3375e39 4636c50
+Author: Novampr <limedev8756@gmail.com>
+Date:   Thu Nov 14 19:32:55 2024 +0000
+
+    Merge branch 'Pojlib-HEF' of https://github.com/Refitted-Team/Pojlib-HEF into Pojlib-HEF
+
+[33mcommit 3375e39072a8643d936e1ab4952ea23749cfc057[m
+Author: Novampr <limedev8756@gmail.com>
+Date:   Thu Nov 14 19:22:13 2024 +0000
+
+    Port of Commit 72032ca from QC's Pojlib
+
+[33mcommit 4636c50ea5a7b916143b0a99244da25275fcdc73[m[33m ([m[1;31morigin/Pojlib-HEF[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Rova <100384210+Novampr@users.noreply.github.com>
+Date:   Wed Oct 2 22:29:21 2024 +0100
+
+    Delete src/main/jni/tinywrapper directory
+
+[33mcommit 02b2a9dbd8027f72b674d8fce19968ece9572502[m
+Author: Rova <100384210+Novampr@users.noreply.github.com>
+Date:   Wed Sep 25 16:05:01 2024 +0100
+
+    Update README with some changes to suit license
+    
+    Removed shield which was broken
+
+[33mcommit 43003993ca1e27e37898fee7c81860f1b30e4640[m
+Author: Novampr <limedev8756@gmail.com>
+Date:   Sun Aug 25 16:54:47 2024 +0100
+
+    Dehardcode the JDK... again
+
+[33mcommit c929c1dabd79fb2d6db0887e3e27bfc46bfca2af[m
+Author: Novampr <limedev8756@gmail.com>
+Date:   Fri Aug 23 22:11:23 2024 +0100
+
+    Allow a custom JDK to be supplied.
+
+[33mcommit 3d930e613e7e0903f1451880895e6a008cce4c8e[m
+Author: Novampr <limedev8756@gmail.com>
+Date:   Mon Aug 5 14:15:01 2024 +0100
+
+    Additional MC args
+
+[33mcommit 27ab49cffa713e5cf5d0c78ec5e8bfe9b8022909[m
+Author: computer-catt <belauanton@gmail.com>
+Date:   Mon Aug 5 08:11:22 2024 -0500
+
+    Added support for snapshots
+
+[33mcommit 3eaace0886f4d9913690f77b1fe1638b23f60129[m
+Author: computer-catt <belauanton@gmail.com>
+Date:   Sun Jul 14 01:37:00 2024 -0500
+
+    remove unused dependencies and files
+    update unity library and other used dependencies
+
+[33mcommit 2dc75ec2252d9d987822071cf4b66899ef342f50[m
+Author: computer-catt <belauanton@gmail.com>
+Date:   Fri Jul 12 15:00:08 2024 -0500
+
+    fix paths (again again again)
+
+[33mcommit c5b98371ee7bf276ef818b770b3b7199b0a3bef5[m
+Author: computer-catt <belauanton@gmail.com>
+Date:   Wed Jul 10 00:28:15 2024 -0500
+
+    fix paths (again again)
+
+[33mcommit 34f2f44c15bfdef95680170bcaa3d52080c14323[m
+Author: Novampr <limedev8756@gmail.com>
+Date:   Sat Jul 6 22:49:19 2024 +0100
+
+    Paths again
+
+[33mcommit 5b55ad7b27ba474d49f27b672ba0b03447b3e86d[m
+Author: Novampr <limedev8756@gmail.com>
+Date:   Sat Jul 6 22:25:21 2024 +0100
+
+    Fix the paths I hope
+
+[33mcommit ae71d46a64f434bc313cb3969bb2f5f939ee27e2[m
+Author: Novampr <limedev8756@gmail.com>
+Date:   Sat Jul 6 21:40:59 2024 +0100
+
+    Fix the directory of choice
+
+[33mcommit bdede5758ac73b9237d40a3ced80e305bdb09d17[m
+Author: Novampr <limedev8756@gmail.com>
+Date:   Tue Jun 25 20:28:21 2024 +0100
+
+    Remove test
+
+[33mcommit 443435ddd870d5a84838bb6ea2ed53254d749fec[m
+Author: Novampr <limedev8756@gmail.com>
+Date:   Tue Jun 25 20:24:35 2024 +0100
+
+    A bunch of fixes and removal of stuffs
+
+[33mcommit ebfe0a7a05330eb55354d648f47dbf03bd6c7bcd[m
+Author: Amp <100384210+Novampr@users.noreply.github.com>
+Date:   Tue Jun 25 19:30:12 2024 +0100
+
+    Update API.java
+
+[33mcommit 7179bad7b38da3353184afcf6b5a49bebbcb9801[m
+Author: Amp <100384210+Novampr@users.noreply.github.com>
+Date:   Tue Jun 25 19:21:34 2024 +0100
+
+    Delete src/main/java/pojlib/util/Constants.java
+
+[33mcommit e386c7cc9d032933a3817e664654f821a9f23b25[m
+Author: Amp <100384210+Novampr@users.noreply.github.com>
+Date:   Tue Jun 25 19:21:22 2024 +0100
+
+    Update JREUtils.java
+
+[33mcommit c164366c3123ae560a9e087d4040a58689dbb3f2[m
+Author: Amp <100384210+Novampr@users.noreply.github.com>
+Date:   Tue Jun 25 19:18:58 2024 +0100
+
+    Update API.java
+
+[33mcommit 11da9339499db40c746852c1aafb30bdb792d4a8[m
+Author: Amp <100384210+Novampr@users.noreply.github.com>
+Date:   Tue Jun 25 19:18:40 2024 +0100
+
+    Update JREUtils.java
+
+[33mcommit ed68adb995c9fa51db5c87bfb305cee18050345a[m
+Author: Amp <100384210+Novampr@users.noreply.github.com>
+Date:   Tue Jun 25 00:18:34 2024 +0100
+
+    Update UnityPlayerActivity.java
+
+[33mcommit 1e80635dfe97f0aacedfecfdfb7c3cb5aef69e03[m
+Author: Amp <100384210+Novampr@users.noreply.github.com>
+Date:   Tue Jun 25 00:18:00 2024 +0100
+
+    Delete src/main/assets/hacks directory
+
+[33mcommit 3a1f27b1b1708eadab27a9833b500ffc16ea82e5[m
+Author: Amp <100384210+Novampr@users.noreply.github.com>
+Date:   Tue Jun 25 00:17:48 2024 +0100
+
+    Delete src/main/assets/lwjgl directory
+
+[33mcommit 850ec3cc5155e1a7fb90c75aaf2ab250c94dadbb[m
+Author: Amp <100384210+Novampr@users.noreply.github.com>
+Date:   Tue Jun 25 00:17:35 2024 +0100
+
+    Delete src/main/assets/JRE-22.zip
+
+[33mcommit 4fdc7d2b7383fba4d2903ab76978280c110850a4[m
+Author: Amp <100384210+Novampr@users.noreply.github.com>
+Date:   Sat Jun 22 01:17:38 2024 +0100
+
+    AdditionalArgs
+
+[33mcommit 9166918541580051e59d69761821f736f9abf5f1[m
+Author: Novampr <limedev8756@gmail.com>
+Date:   Fri Jun 21 23:53:10 2024 +0100
+
+    Remove rest of old Pojlib
+
+[33mcommit ab6400b45efaaad043d2002743aa17c3456a65f6[m
+Author: Novampr <limedev8756@gmail.com>
+Date:   Fri Jun 21 23:50:36 2024 +0100
+
+    Too much to describe here
+
+[33mcommit 7c8db56c350134ca6f8a1b383c3c7168fd5c84e0[m
+Author: Darien Johnson <84008186+CADIndie@users.noreply.github.com>
+Date:   Mon Jun 10 19:10:01 2024 -0400
+
+    Update wrapper
+
+[33mcommit 04f4e9d31dd822ccf6cd59d9e657a614f41a0685[m
+Author: The Judge <colepatirckroberts@gmail.com>
+Date:   Mon Jun 10 14:32:19 2024 -0700
+
+    Readd optional JVM signal handling
+
+[33mcommit f41676bfea8084ac25c3b1c15c201d469ed14a1e[m
+Author: The Judge <colepatirckroberts@gmail.com>
+Date:   Mon Jun 10 13:10:12 2024 -0700
+
+    Reduce stutter
+
+[33mcommit 086292479a3acb8f81cf619393cd20b5c72d4bdf[m
+Author: Darien Johnson <84008186+CADIndie@users.noreply.github.com>
+Date:   Sun Jun 9 23:13:33 2024 -0400
+
+    Update API Location
+
+[33mcommit cecb34fad7e218cf774e16c5e5a4efd9e8f8d10f[m
+Author: The Judge <colepatirckroberts@gmail.com>
+Date:   Wed Jun 5 13:56:02 2024 -0700
+
+    Use JVMCI
+
+[33mcommit 90a4924c3a315b3cef5d1cc94599627af96a8dbe[m
+Author: The Judge <colepatirckroberts@gmail.com>
+Date:   Wed Jun 5 12:28:23 2024 -0700
+
+    Update submodule
+
+[33mcommit b9ffd9d605ea8e38b88f5b311a1a45129bcfe4cd[m
+Author: The Judge <colepatirckroberts@gmail.com>
+Date:   Wed Jun 5 12:26:20 2024 -0700
+
+    Fixes and updates
+
+[33mcommit 6fce1f5e1d1394dd25186b1843a1c4ba9ff6fe37[m
+Merge: 576eb01 727b1ec
+Author: The Judge <colepatirckroberts@gmail.com>
+Date:   Wed Jun 5 11:55:52 2024 -0700
+
+    Merge remote-tracking branch 'origin/QuestCraft' into QuestCraft
+
+[33mcommit 727b1ec6084ada4775aedcc51460ebf432ca7362[m
+Author: The Judge <53906078+thejudge156@users.noreply.github.com>
+Date:   Tue Jun 4 20:31:25 2024 -0700
+
+    Fix Submodule Issues
+
+[33mcommit 576eb0109342bccf39c50c891ed751e2b130e6d8[m
+Author: The Judge <colepatirckroberts@gmail.com>
+Date:   Tue Jun 4 22:35:02 2024 -0700
+
+    ABORT
+
+[33mcommit d6a1c461d1fa31def44f4960235df661e39e7728[m
+Author: The Judge <colepatirckroberts@gmail.com>
+Date:   Tue Jun 4 22:31:47 2024 -0700
+
+    Sobs
+
+[33mcommit 8bd78555f947532ddda5aeee3396ae31ccb1bbd0[m
+Author: The Judge <53906078+thejudge156@users.noreply.github.com>
+Date:   Tue Jun 4 22:20:54 2024 -0700
+
+    Update gradle.yml
+
+[33mcommit b6028e7b0760a0ec5725fbc745539ecd05a92c2a[m
+Author: The Judge <colepatirckroberts@gmail.com>
+Date:   Tue Jun 4 22:15:34 2024 -0700
+
+    Me and CAD are crying in VC right now
+
+[33mcommit d1852742d8fa4a2ccd0fc56e016a91272ca03710[m
+Author: The Judge <53906078+thejudge156@users.noreply.github.com>
+Date:   Tue Jun 4 22:08:59 2024 -0700
+
+    Update gradle.yml
+
+[33mcommit 11e97bedeabc6139b42fd8e5761910c30d1cf8e6[m
+Author: The Judge <53906078+thejudge156@users.noreply.github.com>
+Date:   Tue Jun 4 22:06:24 2024 -0700
+
+    Update gradle.yml
+
+[33mcommit 712f0742e81a37dc0588cc863a5a3530994d52c3[m
+Author: The Judge <53906078+thejudge156@users.noreply.github.com>
+Date:   Tue Jun 4 22:04:12 2024 -0700
+
+    Update gradle.yml
+
+[33mcommit 876251372ac6779086206ba5cd12d587b7d020f2[m
+Author: The Judge <colepatirckroberts@gmail.com>
+Date:   Tue Jun 4 22:02:55 2024 -0700
+
+    RIP CADs NDK
+
+[33mcommit 8294a512a10cd9d7fe89033216fc43f49bef33bd[m
+Author: The Judge <colepatirckroberts@gmail.com>
+Date:   Tue Jun 4 22:00:59 2024 -0700
+
+    We are all in pain
+
+[33mcommit f6d899d8831b6131e3dc952ba2b711b4d3d1097b[m
+Author: The Judge <colepatirckroberts@gmail.com>
+Date:   Tue Jun 4 21:44:40 2024 -0700
+
+    Attempt 2
+
+[33mcommit a20dd656c24113d0aca62e49f95900cefb959236[m
+Author: The Judge <colepatirckroberts@gmail.com>
+Date:   Tue Jun 4 21:14:44 2024 -0700
+
+    Build everything
+
+[33mcommit e4ba661beedc28bed77c908be6f341ea79ad8c02[m
+Author: The Judge <53906078+thejudge156@users.noreply.github.com>
+Date:   Tue Jun 4 20:35:31 2024 -0700
+
+    Cries in java 11
+
+[33mcommit 553a85c129a90e479ac9f190ccf723b6b635f74a[m
+Author: The Judge <53906078+thejudge156@users.noreply.github.com>
+Date:   Tue Jun 4 20:31:25 2024 -0700
+
+    Update build.gradle
+
+[33mcommit ce178a8fbbb228dd9dbb7cefae49d232151903e0[m
+Merge: 51d5d86 1a78139
+Author: Darien Johnson <84008186+CADIndie@users.noreply.github.com>
+Date:   Tue Jun 4 23:27:33 2024 -0400
+
+    Merge branch 'QuestCraft' of https://github.com/QuestCraftPlusPlus/Pojlib into QuestCraft
+
+[33mcommit 51d5d86182943d1c5203647909272da59b9467c5[m
+Author: Darien Johnson <84008186+CADIndie@users.noreply.github.com>
+Date:   Tue Jun 4 23:27:16 2024 -0400
+
+    Update wrapper
+
+[33mcommit 1a78139d0bbf42e34da40f4b2f0169ca3b748092[m
+Author: The Judge <53906078+thejudge156@users.noreply.github.com>
+Date:   Tue Jun 4 20:05:51 2024 -0700
+
+    Update gradle.yml
+
+[33mcommit a72d3bd23fa793f22a06c438d96a8199546ef4d4[m
+Author: Darien Johnson <84008186+CADIndie@users.noreply.github.com>
+Date:   Tue Jun 4 23:04:03 2024 -0400
+
+    Add Wrapper Submodule
+
+[33mcommit b932c83b354b224db4d2abe0d1a8fec846a2d8a5[m
+Author: The Judge <colepatirckroberts@gmail.com>
+Date:   Sun Jun 2 16:20:29 2024 -0700
+
+    Revert "Update JREUtils.java"
+    
+    This reverts commit f042ddfca244fba80ad3618af5c2effe6fa5f616.
+
+[33mcommit 20c78ca59ed5b9d5e50ac2feb866796b959b75d8[m
+Author: The Judge <colepatirckroberts@gmail.com>
+Date:   Sun Jun 2 16:20:29 2024 -0700
+
+    Revert "Embeddium on .4 and .1, add bunch of mods to .4, remove modmenu till all versions are using mods.json instead of devmods.json"
+    
+    This reverts commit c4eb3b2d14166845af5479ae6770b893c2848c65.
+
+[33mcommit e982b28257d8caf5c8d1904692016ba2d213e163[m
+Merge: c18d49d c4eb3b2
+Author: The Judge <53906078+thejudge156@users.noreply.github.com>
+Date:   Sun Jun 2 13:01:34 2024 -0700
+
+    Merge pull request #45 from Cart-shit/EmbeddiumCraft
+    
+    Embeddium X JVM Update
+
+[33mcommit c4eb3b2d14166845af5479ae6770b893c2848c65[m
+Author: Cart <cartrigger@gmail.com>
+Date:   Mon May 27 17:48:49 2024 -0400
+
+    Embeddium on .4 and .1, add bunch of mods to .4, remove modmenu till all versions are using mods.json instead of devmods.json
+
+[33mcommit f042ddfca244fba80ad3618af5c2effe6fa5f616[m
+Author: Cart <81428538+Cartrigger@users.noreply.github.com>
+Date:   Sat May 25 23:06:54 2024 -0400
+
+    Update JREUtils.java
+
+[33mcommit c18d49dd6c23a92a4762ec360f26d1fb26148d35[m
+Author: Darien Johnson <84008186+CADIndie@users.noreply.github.com>
+Date:   Fri May 24 21:23:56 2024 -0400
+
+    Fix 1.19.4 Sodium
+
+[33mcommit 6f25ffd4aa09e866f1831f2af6534aca6e7b5303[m
+Author: Darien Johnson <84008186+CADIndie@users.noreply.github.com>
+Date:   Thu May 23 15:04:42 2024 -0400
+
+    Fix JRE Unpacking
+
+[33mcommit d2c5306c9f56c1db57729901e36b8788355c7e0b[m
+Author: The Judge <53906078+thejudge156@users.noreply.github.com>
+Date:   Thu May 23 12:03:11 2024 -0700
+
+    Delete mods_new.json
+
+[33mcommit 56b00183d91be434296bf93e23246c1a664bdcba[m
+Author: The Judge <53906078+thejudge156@users.noreply.github.com>
+Date:   Thu May 23 12:02:03 2024 -0700
+
+    Update devmods.json
+
+[33mcommit 14c4c75fe533542a044da6e65d0ad3b32e847398[m
+Author: The Judge <53906078+thejudge156@users.noreply.github.com>
+Date:   Thu May 23 12:01:37 2024 -0700
+
+    Update mods.json
+
+[33mcommit e1b0344a88cd05ef67393cdd861bb7c5ea918ee7[m
+Author: The Judge <53906078+thejudge156@users.noreply.github.com>
+Date:   Thu May 23 12:01:10 2024 -0700
+
+    Update mods.json
+
+[33mcommit 3452096768876dd6686f59ea1eb92b862e14822a[m
+Author: The Judge <53906078+thejudge156@users.noreply.github.com>
+Date:   Thu May 23 11:56:30 2024 -0700
+
+    Update mods_new.json
+
+[33mcommit 5704526fd235d695aabe084950b846af4ba3bfed[m
+Author: Darien Johnson <84008186+CADIndie@users.noreply.github.com>
+Date:   Thu May 23 12:02:14 2024 -0400
+
+    Judge did a silly
+
+[33mcommit cb95fc9d48c06cf401e522a948cb0339ca9613ae[m
+Author: The Judge <53906078+thejudge156@users.noreply.github.com>
+Date:   Thu May 23 08:55:05 2024 -0700
+
+    Replace assertion with logged error message
+
+[33mcommit cca55171a45fcbd9bbdb99890b71b29dd950282c[m
+Author: The Judge <colepatirckroberts@gmail.com>
+Date:   Thu May 23 08:15:39 2024 -0700
+
+    Update our OpenXR Loader
+
+[33mcommit d46ab174172cb62e98431e8f7cc49763fab366d6[m
+Author: The Judge <colepatirckroberts@gmail.com>
+Date:   Thu May 23 08:12:28 2024 -0700
+
+    Null-Check
+
+[33mcommit d5864b99b55e8233341a5c2429eaece0092e30d2[m
+Author: The Judge <53906078+thejudge156@users.noreply.github.com>
+Date:   Wed May 22 15:43:44 2024 -0700
+
+    Update devmods.json
+
+[33mcommit aa0e6a0383677e49b2b368096eda7a510bf4d792[m
+Author: The Judge <53906078+thejudge156@users.noreply.github.com>
+Date:   Wed May 22 15:37:29 2024 -0700
+
+    Fix 1.18.2
+
+[33mcommit 4a945430253438bfd3ca68c9cad57f730a409a06[m
+Author: The Judge <colepatirckroberts@gmail.com>
+Date:   Wed May 22 14:01:37 2024 -0700
+
+    Fix
+
+[33mcommit 92ab24622009f67bc6dbc2416409719803ad5b6d[m
+Author: The Judge <colepatirckroberts@gmail.com>
+Date:   Wed May 22 13:15:43 2024 -0700
+
+    Fix typo
+
+[33mcommit 85b9f1826e3afb4cbe86587e30ffc177db044d4c[m
+Author: The Judge <colepatirckroberts@gmail.com>
+Date:   Wed May 22 13:05:44 2024 -0700
+
+    Move all extra files as a "extra project" as defined by modrinth, add type param for differentiation
+
+[33mcommit c8cd1554d498a9fdadb6909c682469bdc77416c6[m
+Author: The Judge <colepatirckroberts@gmail.com>
+Date:   Mon May 20 16:26:38 2024 -0700
+
+    Revert "Yep."
+    
+    This reverts commit a75ba60b05925ab42be870bbab8cdd2c6ba90742.
+
+[33mcommit 08f8e7f61822b575f171db6646e5fd2a65061f02[m
+Author: The Judge <colepatirckroberts@gmail.com>
+Date:   Mon May 20 16:26:37 2024 -0700
+
+    Revert "Fix EGL Bridge"
+    
+    This reverts commit 3b91dddbffd43b980ab611a27967c75c1b5a3525.
+
+[33mcommit 0c1e037a3c8897f01105034d43bcfd4926e1e3c4[m
+Merge: aff8c2c 0e24d9c
+Author: The Judge <colepatirckroberts@gmail.com>
+Date:   Mon May 20 16:26:16 2024 -0700
+
+    Merge remote-tracking branch 'origin/QuestCraft' into QuestCraft
+
+[33mcommit aff8c2c84357e99e1de54987387a29d2d279b3da[m
+Author: The Judge <colepatirckroberts@gmail.com>
+Date:   Mon May 20 16:25:56 2024 -0700
+
+    Fix archive extractor
+
+[33mcommit 0e24d9c385893d3af41f068d5aacb36e3c76bcea[m
+Merge: 3b91ddd 9a0b4cd
+Author: The Judge <53906078+thejudge156@users.noreply.github.com>
+Date:   Mon May 20 12:09:50 2024 -0700
+
+    Merge pull request #42 from Cart-shit/QuestCraft
+    
+    Update mods, add new ones
+
+[33mcommit 3b91dddbffd43b980ab611a27967c75c1b5a3525[m
+Author: The Judge <colepatirckroberts@gmail.com>
+Date:   Mon May 13 16:09:57 2024 -0700
+
+    Fix EGL Bridge
+
+[33mcommit a75ba60b05925ab42be870bbab8cdd2c6ba90742[m
+Author: The Judge <colepatirckroberts@gmail.com>
+Date:   Mon May 13 15:51:29 2024 -0700
+
+    Yep.
+
+[33mcommit 9a0b4cd98debce9b34f1e9269415599978473c3b[m
+Merge: 32306a6 305fd3b
+Author: Cart <81428538+Cartrigger@users.noreply.github.com>
+Date:   Sun May 12 23:34:56 2024 -0400
+
+    Merge branch 'QuestCraftPlusPlus:QuestCraft' into QuestCraft
+
+[33mcommit 32306a6c3791e8cb9916ac32fb796845de74fcaf[m
+Author: Cart <cartrigger@gmail.com>
+Date:   Sun May 12 23:34:29 2024 -0400
+
+    Update better biome blend, fix slug of mods
+
+[33mcommit 305fd3b8c7bab4cb969c4a957819ffd1096d26de[m
+Author: Darien Johnson <84008186+CADIndie@users.noreply.github.com>
+Date:   Sun May 12 20:16:23 2024 -0400
+
+    Swap to Instanced Dirs (#41)
+    
+    
+    ---------
+    
+    Co-authored-by: The Judge <colepatirckroberts@gmail.com>

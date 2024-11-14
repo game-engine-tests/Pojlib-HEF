@@ -1,6 +1,7 @@
 package pojlib;
 
 import android.app.Activity;
+import android.view.WindowManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -58,6 +59,19 @@ public class API {
             JREUtils.launchJavaVM(activity, allArgs, mcArgs, mcAdditionalArgs, gameDir, memoryValue, vrModel, mainClass, jvmHome);
         } catch (Throwable t) {
             throw new RuntimeException("JVM has stopped.", t);
+        }
+    }
+
+    /**
+     * Should the screen be kept on
+     * @param activity The Android activity
+     */
+    @SuppressWarnings("unused")
+    public static void keepScreenOn(Activity activity, boolean doThing) {
+        if (doThing) {
+            activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        } else {
+            activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         }
     }
 
