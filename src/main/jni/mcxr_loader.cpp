@@ -30,6 +30,6 @@ Java_net_sorenon_mcxr_play_MCXRNativeLoad_getApplicationActivityPtr(JNIEnv *env,
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_pojlib_util_VLoader_setActivity(JNIEnv *env, jclass clazz, jobject ctx) {
+Java_pojlib_VLoader_setActivity(JNIEnv *env, jclass clazz, jobject ctx) {
     app = reinterpret_cast<jobject*>(env->NewGlobalRef(ctx));
 }
