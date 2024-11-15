@@ -34,7 +34,7 @@ static void *logger_thread() {
     return NULL;
 }
 JNIEXPORT void JNICALL
-Java_pojlib_util_JREUtils_logToLogger(JNIEnv *env, jclass clazz, jobject javaLogger) {
+Java_pojlib_JREUtils_logToLogger(JNIEnv *env, jclass clazz, jobject javaLogger) {
     // TODO: implement logToActivity()
     jclass loggableActivityClass = (*env)->FindClass(env,"pojlib/util/Logger");
     _______method = (*env)->GetMethodID(env,loggableActivityClass,"appendToLog", "(Ljava/lang/String;)V");
