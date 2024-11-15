@@ -57,7 +57,7 @@ static std::string load_file(const char *path) {
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_pojlib_VLoader_setAndroidInitInfo(JNIEnv *env, jclass clazz, jobject ctx) {
+Java_pojlib_VLoader_setActivity(JNIEnv *env, jclass clazz, jobject ctx) {
     OpenComposite_Android_Load_Input_File = load_file;
 
     env->GetJavaVM(&jvm);
