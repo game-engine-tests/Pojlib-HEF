@@ -62,19 +62,6 @@ public class API {
         }
     }
 
-    /**
-     * Should the screen be kept on
-     * @param activity The Android activity
-     */
-    @SuppressWarnings("unused")
-    public static void keepScreenOn(Activity activity, boolean doThing) {
-        if (doThing) {
-            activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        } else {
-            activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        }
-    }
-
     @SuppressWarnings("unused")
     public static String getTestString() {
         return "Successful load!\n";
