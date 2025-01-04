@@ -7,7 +7,7 @@ public class VLoader {
     static {
         System.loadLibrary("openxr_loader");
         System.loadLibrary("openvr_api");
-        System.loadLibrary("mcxr-loader");
+        System.loadLibrary("mcxr_loader");
     }
 
     public static native void setAndroidInitInfo(Context ctx);

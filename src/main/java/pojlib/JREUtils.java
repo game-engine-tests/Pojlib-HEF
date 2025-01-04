@@ -18,6 +18,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import pojlib.android.BuildConfig;
+
 public class JREUtils {
     private JREUtils() {}
 
@@ -201,6 +203,8 @@ public class JREUtils {
         userArgs.add(mainClass);
         userArgs.addAll(Arrays.asList(mcArgs));
         userArgs.addAll(Arrays.asList(mcAdditionalArgs));
+
+        Logger.getInstance(activity).appendToLog(BuildConfig.DEBUG ? String.join("\n", userArgs) : "Release mode, not dumping args."); // Dump args if debug mode
 
         int exitCode = VMLauncher.launchJVM(userArgs.toArray(new String[0]));
         Logger.getInstance(activity).appendToLog("Java Exit code: " + exitCode);

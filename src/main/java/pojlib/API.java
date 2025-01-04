@@ -46,15 +46,14 @@ public class API {
             String[] mcAdditionalArgs,
             String jvmHome
     ) {
-        VLoader.setActivity(activity);
-
         String[] mcArgs = {"--username", username, "--version", versionName, "--gameDir", gameDir,
                 "--assetsDir", assetsDir, "--assetIndex", assetIndex, "--uuid", formattedUuid,
                 "--accessToken", accessToken, "--userType", userType, "--versionType", versionType};
 
         List<String> allArgs = new ArrayList<>(Arrays.asList(additionalArgs));
         JREUtils.redirectAndPrintJRELog(activity);
-        VLoader.setAndroidInitInfo(activity);
+        VLoader.setActivity(activity); //MCXR
+        VLoader.setAndroidInitInfo(activity); //Vivecraft
         try {
             JREUtils.launchJavaVM(activity, allArgs, mcArgs, mcAdditionalArgs, gameDir, memoryValue, vrModel, mainClass, jvmHome);
         } catch (Throwable t) {
